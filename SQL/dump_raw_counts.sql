@@ -1,4 +1,6 @@
+.echo on 
 
+--Get counts of each table that was ingested
 SELECT COUNT(*) AS TBL_CNT, 'daily_citi_bike_trip_counts_and_weather' as TBL_NM from daily_citi_bike_trip_counts_and_weather
 UNION
 SELECT COUNT(*) AS TBL_CNT, 'bike_data' as TBL_NM from bike_data

@@ -1,5 +1,6 @@
 .echo on
 
+--Get table list and show schema for each table that was ingested
 SHOW TABLES;
 DESCRIBE bike_data;
 DESCRIBE central_park_weather;
