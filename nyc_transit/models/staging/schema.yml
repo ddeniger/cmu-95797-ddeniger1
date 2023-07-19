@@ -1,0 +1,224 @@
+models:
+  - name: stg__bike_data
+    description: ""
+    columns:
+      - name: trip_duration
+        description: "Trip duration in seconds"
+
+      - name: trip_start_datetime
+        description: "Trip start timestamp"
+
+      - name: trip_end_datetime
+        description: "Trip end timestamp"
+
+      - name: start_station_id
+        description: "Orignating station identifier"
+
+      - name: start_station_name
+        description: "Originating station name"
+
+      - name: start_latitude
+        description: "Originating station latitude"
+
+      - name: start_longitude
+        description: "Originating station longitude"
+
+      - name: end_station_id
+        description: "Dropoff station identifier"
+
+      - name: end_station_name
+        description: "Dropoff station name"
+
+      - name: end_latitude
+        description: "Dropoff station latitude"
+
+      - name: end_longitude
+        description: "Dropoff station longitude"
+
+      - name: bike_id
+        description: "Bike identifier"
+
+      - name: user_type
+        description: "Type of user"
+
+      - name: user_birth_year
+        description: "Birth year of user"
+
+      - name: user_gender
+        description: "Gener of user"
+
+      - name: ride_id
+        description: "Ride identifier"
+        tests:
+          - unique
+          - dbt_expectations.expect_column_to_exist
+
+      - name: rideable_type
+        description: "Type of bike rented"
+
+      - name: member_casual
+        description: ""
+
+      - name: filename
+        description: ""
+
+  - name: stg__central_park_weather
+    description: ""
+    columns:
+      - name: station_id
+        description: "Station idenfier"
+
+      - name: station_name
+        description: "Station name"
+
+      - name: date
+        description: "Date of measurement recorded"
+
+      - name: windspeed_mph
+        description: "Windspeed in mph"
+
+      - name: precipitation
+        description: "Precipitation in inches"
+
+      - name: snow_fall
+        description: "Snowfall in inches"
+
+      - name: snow_depth
+        description: "Depth of ground snow in inches"
+
+      - name: temperature_max
+        description: ""
+
+      - name: temperature_min
+        description: ""
+
+      - name: filename
+        description: ""
+
+  - name: stg__fhv_bases
+    description: ""
+    columns:
+      - name: base_number
+        description: ""
+        tests:
+          - unique
+
+      - name: base_name
+        description: ""
+
+      - name: dba_name
+        description: ""
+
+      - name: dba_category
+        description: ""
+
+      - name: filename
+        description: ""
+
+  - name: stg__fhv_tripdata
+    description: ""
+    columns:
+      - name: dispatching_base_num
+        description: ""
+
+      - name: pickup_datetime
+        description: ""
+
+      - name: dropoff_datetime
+        description: ""
+
+      - name: pu_location_id
+        description: "Pickup location identifier"
+
+      - name: do_location_id
+        description: "Dropoff location identifier"
+
+      - name: affiliated_base_number
+        description: ""
+
+      - name: filename
+        description: ""
+
+  - name: stg__fhvhv_tripdata
+    description: ""
+    columns:
+      - name: hvfhs_license_num
+        description: "HVFHS base license identifier"
+
+      - name: dispatching_base_num
+        description: "Dispatching base license identifier"
+
+      - name: originating_base_num
+        description: "Originating base license identifier"
+
+      - name: request_datetime
+        description: "Timestamp of trip request by customer"
+
+      - name: on_scene_datetime
+        description: "Timestamp that vehicle arrived at requested location"
+
+      - name: pickup_datetime
+        description: "Timestamp that customer got into the vehicle"
+
+      - name: dropoff_datetime
+        description: "Timestamp that vehicle arrived at the destination"
+
+      - name: pu_location_id
+        description: "Pickup location identifier"
+
+      - name: do_location_id
+        description: "Dropoff location identifier"
+
+      - name: trip_miles
+        description: "Total miles traveled by the vehicle during the trip"
+
+      - name: trip_time
+        description: "Time in seconds elapsed during trip"
+
+      - name: base_passenger_fare
+        description: "Ride fare before tolls, taxes, tips, etc."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              config:
+                severity: warn  
+
+      - name: tolls
+        description: "Fare related to road tolls"
+
+      - name: bcf
+        description: "Fare related to black car fund"
+
+      - name: sales_tax
+        description: "Fare related to sales tax"
+
+      - name: congestion_surcharge
+        description: "Fare related to congestion at time of trip"
+
+      - name: airport_fee
+        description: "Fare related to airport pickup/dropoff, specific to each airport agreement"
+
+      - name: tips
+        description: "Fare related to elected tip"
+
+      - name: driver_pay
+        description: "Amount earned by the driver for the trip"
+
+      - name: shared_request_flag
+        description: "Indicator of whether a shared ride was requested by passenger"
+
+      - name: shared_match_flag
+        description: "Indicator of whether the ride was shared"
+
+      - name: access_a_ride_flag
+        description: "Indicator of whether the ride was requested by a 3rd party"
+
+      - name: wav_request_flag
+        description: "Indicator of whether a wheelchair accessible vehicle was requested by passenger"
+
+      - name: wav_match_flag
+        description: "Indicator of whether a wheelchair accessible vehicle was provided"
+
+      - name: filename
+        description: ""
+

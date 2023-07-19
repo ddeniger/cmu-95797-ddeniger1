@@ -5,58 +5,88 @@ sources:
         columns:
           - name: tripduration
             data_type: CHARACTER VARYING(256)
+            description: "Trip duration in seconds"
           - name: starttime
             data_type: CHARACTER VARYING(256)
+            description: "Legacy trip start timestamp"
           - name: stoptime
             data_type: CHARACTER VARYING(256)
+            description: "Legacy trip stop timestamp"
           - name: start station id
             data_type: CHARACTER VARYING(256)
+            description: "Legacy originating station identifier"
           - name: start station name
             data_type: CHARACTER VARYING(256)
+            description: "Legacy originating station name"
           - name: start station latitude
             data_type: CHARACTER VARYING(256)
+            description: "Legacy originating station latitude"
           - name: start station longitude
             data_type: CHARACTER VARYING(256)
+            description: "Legacy originating station longitude"
           - name: end station id
             data_type: CHARACTER VARYING(256)
+            description: "Legacy dropoff station identifier"
           - name: end station name
             data_type: CHARACTER VARYING(256)
+            description: "Legacy dropoff station name"
           - name: end station latitude
             data_type: CHARACTER VARYING(256)
+            description: "Legacy dropoff station latitude"
           - name: end station longitude
             data_type: CHARACTER VARYING(256)
+            description: "Legacy dropoff station longitude"
           - name: bikeid
             data_type: CHARACTER VARYING(256)
+            description: "Bike identifier"
           - name: usertype
             data_type: CHARACTER VARYING(256)
+            description: "Type of user"
           - name: birth year
             data_type: CHARACTER VARYING(256)
+            description: "Birth year of user"
           - name: gender
             data_type: CHARACTER VARYING(256)
+            description: "Gender of user"
           - name: ride_id
             data_type: CHARACTER VARYING(256)
+            description: "Ride identifier"
+            tests:
+              - unique
+              - dbt_expectations.expect_column_to_exist
           - name: rideable_type
             data_type: CHARACTER VARYING(256)
+            description: "Type of bike rented"
           - name: started_at
             data_type: CHARACTER VARYING(256)
+            description: "Updated trip start timestamp"
           - name: ended_at
             data_type: CHARACTER VARYING(256)
+            description: "Updated trip stop timestamp"
           - name: start_station_name
             data_type: CHARACTER VARYING(256)
+            description: "Updated originating station name"
           - name: start_station_id
             data_type: CHARACTER VARYING(256)
+            description: "Updated originating station identifier"
           - name: end_station_name
             data_type: CHARACTER VARYING(256)
+            description: "Updated dropoff station name"
           - name: end_station_id
             data_type: CHARACTER VARYING(256)
+            description: "Updated dropoff station identifier"
           - name: start_lat
             data_type: CHARACTER VARYING(256)
+            description: "Updated originating station latitude"
           - name: start_lng
             data_type: CHARACTER VARYING(256)
+            description: "Updated originating station longitude"
           - name: end_lat
             data_type: CHARACTER VARYING(256)
+            description: "Updated dropoff station latitude"
           - name: end_lng
             data_type: CHARACTER VARYING(256)
+            description: "Updated dropoff station longitude"
           - name: member_casual
             data_type: CHARACTER VARYING(256)
           - name: filename
@@ -66,22 +96,35 @@ sources:
         columns:
           - name: station
             data_type: CHARACTER VARYING(256)
+            description: "Station identifier"
+            tests:
+              - unique:
+                  config:
+                    severity: warn  
+              - dbt_expectations.expect_column_to_exist
           - name: name
             data_type: CHARACTER VARYING(256)
+            description: "Station name"
           - name: date
             data_type: CHARACTER VARYING(256)
           - name: awnd
             data_type: CHARACTER VARYING(256)
+            description: "Average windspeed"
           - name: prcp
             data_type: CHARACTER VARYING(256)
+            description: "Precipitation"
           - name: snow
             data_type: CHARACTER VARYING(256)
+            description: "Snowfall"
           - name: snwd
             data_type: CHARACTER VARYING(256)
+            description: "Snowfall depth"
           - name: tmax
             data_type: CHARACTER VARYING(256)
+            description: "Max temperature"
           - name: tmin
             data_type: CHARACTER VARYING(256)
+            description: "Min temperature"
           - name: filename
             data_type: CHARACTER VARYING(256)
 
@@ -124,6 +167,9 @@ sources:
         columns:
           - name: base_number
             data_type: CHARACTER VARYING(256)
+            tests:
+              - unique
+              - dbt_expectations.expect_column_to_exist
           - name: base_name
             data_type: CHARACTER VARYING(256)
           - name: dba
@@ -137,16 +183,27 @@ sources:
         columns:
           - name: dispatching_base_num
             data_type: CHARACTER VARYING(256)
+            tests:
+              - not_null
+              - dbt_expectations.expect_column_to_exist
+              - relationships:
+                  to: source('main','fhv_bases')
+                  field: base_number
+                  config:
+                    severity: warn  
           - name: pickup_datetime
             data_type: TIMESTAMP
           - name: dropoff_datetime
             data_type: TIMESTAMP
           - name: pulocationid
             data_type: DOUBLE
+            description: "Pickup location identifier"
           - name: dolocationid
             data_type: DOUBLE
+            description: "Dropoff location identifier"
           - name: sr_flag
             data_type: INTEGER
+            description: "Shared ride indicator. Not useful in static dataset and discarded."
           - name: affiliated_base_number
             data_type: CHARACTER VARYING(256)
           - name: filename
@@ -156,52 +213,94 @@ sources:
         columns:
           - name: hvfhs_license_num
             data_type: CHARACTER VARYING(256)
+            description: "HVFHS base license identifier"
+            tests:
+              - relationships:
+                  to: source('main','fhv_bases')
+                  field: base_number
+                  config:
+                    severity: warn  
           - name: dispatching_base_num
             data_type: CHARACTER VARYING(256)
+            description: "Dispatching base license identifier"
+            tests:
+              - relationships:
+                  to: source('main','fhv_bases')
+                  field: base_number
+                  config:
+                    severity: warn  
           - name: originating_base_num
             data_type: CHARACTER VARYING(256)
+            description: "Originating base license identifier"
+            tests:
+              - relationships:
+                  to: source('main','fhv_bases')
+                  field: base_number
+                  config:
+                    severity: warn  
           - name: request_datetime
             data_type: TIMESTAMP
+            description: "Timestamp of trip request by customer"
           - name: on_scene_datetime
             data_type: TIMESTAMP
+            description: "Timestamp that vehicle arrived at requested location"
           - name: pickup_datetime
             data_type: TIMESTAMP
+            description: "Timestamp that customer got into the vehicle"
           - name: dropoff_datetime
             data_type: TIMESTAMP
+            description: "Timestamp that vehicle arrived at the destination"
           - name: pulocationid
             data_type: BIGINT
+            description: "Pickup location identifier"
           - name: dolocationid
             data_type: BIGINT
+            description: "Dropoff location identifier"
           - name: trip_miles
             data_type: DOUBLE
+            description: "Total miles traveled by the vehicle during the trip"
           - name: trip_time
             data_type: BIGINT
+            description: "Time in seconds elapsed during trip"
           - name: base_passenger_fare
             data_type: DOUBLE
+            description: "Ride fare before tolls, taxes, tips, etc."
           - name: tolls
             data_type: DOUBLE
+            description: "Fare related to road tolls"
           - name: bcf
             data_type: DOUBLE
+            description: "Fare related to black car fund"
           - name: sales_tax
             data_type: DOUBLE
+            description: "Fare related to sales tax"
           - name: congestion_surcharge
             data_type: DOUBLE
+            description: "Fare related to congestion at time of trip"
           - name: airport_fee
             data_type: DOUBLE
+            description: "Fare related to airport pickup/dropoff, specific to each airport agreement"
           - name: tips
             data_type: DOUBLE
+            description: "Fare related to elected tip"
           - name: driver_pay
             data_type: DOUBLE
+            description: "Amount earned by the driver for the trip"
           - name: shared_request_flag
             data_type: CHARACTER VARYING(256)
+            description: "Indicator of whether a shared ride was requested by passenger"
           - name: shared_match_flag
             data_type: CHARACTER VARYING(256)
+            description: "Indicator of whether the ride was shared"
           - name: access_a_ride_flag
             data_type: CHARACTER VARYING(256)
+            description: "Indicator of whether the ride was requested by a 3rd party"
           - name: wav_request_flag
             data_type: CHARACTER VARYING(256)
+            description: "Indicator of whether a wheelchair accessible vehicle was requested by passenger"
           - name: wav_match_flag
             data_type: CHARACTER VARYING(256)
+            description: "Indicator of whether a wheelchair accessible vehicle was provided"
           - name: filename
             data_type: CHARACTER VARYING(256)
 
