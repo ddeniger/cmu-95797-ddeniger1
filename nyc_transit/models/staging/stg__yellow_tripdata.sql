@@ -12,7 +12,7 @@ renamed as (
         passenger_count, --convert to int?
         trip_distance, --remove negatives?
         ratecodeid as rate_code_id, --convert to int?
-        {{ clean_bool('store_and_fwd_flag') }} as store_and_fwd_flag,
+        {{ flag_to_bool('store_and_fwd_flag') }} as store_and_fwd_flag,
         pulocationid as pu_location_id,
         dolocationid as do_location_id,
         payment_type,

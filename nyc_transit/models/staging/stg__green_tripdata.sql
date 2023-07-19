@@ -9,7 +9,7 @@ renamed as (
         vendorid as vendor_id,
         lpep_pickup_datetime,
         lpep_dropoff_datetime,
-        {{ clean_bool('store_and_fwd_flag') }} as store_and_fwd_flag,
+        {{ flag_to_bool('store_and_fwd_flag') }} as store_and_fwd_flag,
         ratecodeid as rate_code_id, --cast to int?
         pulocationid as pu_location_id,
         dolocationid as do_location_id,
