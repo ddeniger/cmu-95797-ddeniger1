@@ -1,6 +1,6 @@
 with source as (
 
-    select * from {{ ref('mart__fact_all_trips') }}
+    select * from {{ ref('mart__fact_all_trips') }} --not sure if referencing mart is a good idea, but didn't want to duplicate code either
 
 ),
 

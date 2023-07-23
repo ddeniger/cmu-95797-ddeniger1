@@ -1,11 +1,11 @@
 with source_bikes as (
 
-    select * from {{ ref('mart__fact_all_bike_trips') }}
+    select * from {{ ref('mart__fact_all_bike_trips') }} --not sure if referencing mart is a good idea, but didn't want to duplicate code either
 
 ),
 source_taxis as (
 
-    select * from {{ ref('mart__fact_all_taxi_trips') }}
+    select * from {{ ref('mart__fact_all_taxi_trips') }} --not sure if referencing mart is a good idea, but didn't want to duplicate code either
 
 ),
 
